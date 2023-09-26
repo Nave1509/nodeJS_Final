@@ -1,0 +1,157 @@
+@local=http://localhost:3000
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTAzMjgzYTYwMDYxMmY2NjA4ZGVhMDkiLCJpc0J1c2luZXNzIjp0cnVlLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2OTQ3MDYwNzF9.eitqynE0SJKJkizBeDAFoO8O2sDYUhAh1vAmjt2QyFM
+@tokenRegular=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTBmM2M4N2RhNjY1MGNmZThmOTJlZTAiLCJpc0J1c2luZXNzIjpmYWxzZSwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY5NTc0MjczM30.LcOcYphxKtoH0oCAvcIZ2Gpn6814kIK3bN9TANhAh-E
+@tokenBiz=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTBmM2M4OGRhNjY1MGNmZThmOTJlZTQiLCJpc0J1c2luZXNzIjp0cnVlLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjk1NTAwNjM4fQ.r9p7y6yudeCMzsC_ftMwX3wP1VEho1KSkTMOwvlJ1C0
+@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTBmM2M4N2RhNjY1MGNmZThmOTJlZTIiLCJpc0J1c2luZXNzIjp0cnVlLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2OTU0OTc1OTR9.qafjtStLOJcuj0lSKVDiwt7_U0u6l6Jh-ebSgFb8kGw
+
+
+### Authenticate (login)
+POST {{local}}/users/login
+Content-Type: application/json
+
+{
+  "email": "john_doe@gmail.com",
+  "password": "Aa123456&"
+}
+
+### Create New User
+POST {{local}}/users
+Content-Type: application/json
+
+{
+    "name":{
+        "first":"Yoni ",
+        "last":"Yeonatan"
+    },
+    "phone":"0526094755",
+    "email":"yoni@yoni.net",
+    "password":"123456",
+    "isBusiness":true,
+    "address":{
+        "state":"",
+        "country":"Israel",
+        "city":"Netanya",
+        "street":"Greenboim",
+        "houseNumber":"30A"
+    }
+}
+
+
+### Get all users
+GET {{local}}/users/
+x-auth-token: {{tokenAdmin}}
+
+
+### Get user by id
+GET {{local}}/users/650f3c87da6650cfe8f92ee0
+x-auth-token:{{tokenRegular}}
+
+
+### Edit user
+PUT {{local}}/users/650f419bf06ea8358818e4b3
+Content-Type: application/json
+x-auth-token: {{tokenAdmin}}
+
+{
+    "name":{
+        "first":"Koko",
+        "last":"Jambo"
+    },
+    "phone":"0526094760",
+    "email":"ben@ben.net",
+    "password":"123456",
+    "isBusiness":true,
+    "address":{
+        "state":"",
+        "country":"Israel",
+        "city":"Netanya",
+        "street":"Greenboim",
+        "houseNumber":"30A"
+    }
+}
+
+
+### Change isBusiness status
+PATCH {{local}}/users/65032839600612f6608dea07
+Content-Type: application/json
+x-auth-token: {{tokenRegular}}
+
+{
+"isBusiness":true
+}
+
+### Delete user
+DELETE {{local}}/users/650f419bf06ea8358818e4b3
+x-auth-token: {{tokenRegular}}
+
+### Get My Cards
+GET {{local}}/cards/my-cards 
+x-auth-token: {{tokenBiz}}
+
+### Get Card By ID
+GET {{local}}/cards/650f44640caf82726e20d93a
+
+
+### Create new Card
+POST {{local}}/cards
+x-auth-token: {{tokenBiz}}
+Content-Type: application/json
+
+{
+    "title":"My Card Title",
+    "subtitle":"My Card subTitle",
+    "description":"My Card description",
+    "phone":"0526094760",
+    "email":"d@d7.ben",
+    "web":"myCards.web",
+    "address":{
+        "state":"",
+        "country":"Israel",
+        "city":"Netanya",
+        "street":"Gronboim",
+        "houseNumber":"30A"
+    }
+}
+### Edit Card
+PUT {{local}}/cards/65087b0a172b88191ebd3479
+x-auth-token: {{tokenBiz}}
+Content-Type: application/json
+
+{
+    "title":"Edit My Card Title",
+    "subtitle":" Edit My Card subTitle",
+    "description":"My Card description",
+    "phone":"0526094760",
+    "email":"d@d7.ben",
+    "web":"myCards.web",
+    "address":{
+        "state":"",
+        "country":"Israel",
+        "city":"Netanya",
+        "street":"Gronboim",
+        "houseNumber":"30A"
+    }
+}
+### Likes Card
+PATCH {{local}}/cards/65087b0a172b88191ebd3479
+x-auth-token: {{tokenBiz}}
+
+### Delete Card
+DELETE {{local}}/cards/650884a78e30cce145abfb37
+x-auth-token: {{tokenAdmin}}
+
+### Change BizNumber
+PATCH {{local}}/cards/changeBiz/650f3c88da6650cfe8f92ee7
+x-auth-token: {{tokenAdmin}}
+Content-Type: application/json
+
+{
+    "bizNumber":"cbvsf51hjhj,h51"
+}
+
+
+###  //static check
+GET {{local}}/hello.html
+
+###
+GET {{local}}/users/koko/shmerling
